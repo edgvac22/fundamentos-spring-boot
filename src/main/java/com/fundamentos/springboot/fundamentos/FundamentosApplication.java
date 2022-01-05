@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.domain.Sort;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -47,16 +48,23 @@ public class FundamentosApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
         //ejemplosAnteriores();
 		saveUsersInDatabase();
+		getInformationJpqlFromUser();
+	}
+
+	private void getInformationJpqlFromUser(){
+		LOGGER.info("Usuario con el metodo findByUserEmail"+ userRepository.findByUserEmail("edgardo@domain.com").orElseThrow(()->new RuntimeException("No se encontró el usuario")));
+
+		userRepository.findAndSort("user", Sort.by("id").descending()).stream().forEach(user -> LOGGER.info("Usuario con el metodo sort" +user));
 	}
 
 	private void saveUsersInDatabase(){
 		User user1 = new User("John", "john@domain.com", LocalDate.of(2021, 03, 20 ));
 		User user2 = new User("Edgardo", "edgardo@domain.com", LocalDate.of(2021, 04, 25 ));
-		User user3 = new User("Juan", "juan@domain.com", LocalDate.of(2021, 05, 23 ));
-		User user4 = new User("Daniela", "daniela@domain.com", LocalDate.of(2021, 04, 17 ));
-		User user5 = new User("Andrea", "andrea@domain.com", LocalDate.of(2022, 01, 02 ));
-		User user6 = new User("Maria", "maria@domain.com", LocalDate.of(2021, 06, 15 ));
-		User user7 = new User("Diana", "diana@domain.com", LocalDate.of(2021, 07, 10 ));
+		User user3 = new User("user", "juan@domain.com", LocalDate.of(2021, 05, 23 ));
+		User user4 = new User("user1", "daniela@domain.com", LocalDate.of(2021, 04, 17 ));
+		User user5 = new User("user2", "andrea@domain.com", LocalDate.of(2022, 01, 02 ));
+		User user6 = new User("user3", "maria@domain.com", LocalDate.of(2021, 06, 15 ));
+		User user7 = new User("user4", "diana@domain.com", LocalDate.of(2021, 07, 10 ));
 		User user8 = new User("Pedro", "pedro@domain.com", LocalDate.of(2021, 12, 07 ));
 		User user9 = new User("Paulo", "paulo@domain.com", LocalDate.of(2021, 10, 03 ));
 		User user10 = new User("Fulvia", "fulvia@domain.com", LocalDate.of(2021, 10, 05 ));
