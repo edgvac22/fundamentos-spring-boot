@@ -30,5 +30,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     //List<User> findByNameLikeOrderByIdDesc(String name);
     List<User> findByNameContainingOrderByIdDesc(String name);
 
-    Optional<UserDto>
+    @Query("select new com.fundamentos.springboot.fundamentos.dto.UserDto(u.id, u.)"+
+    " from User u " +
+    "")
+    Optional<UserDto> getAllByBirthDateAndEmail(LocalDate date, String email);
 }
