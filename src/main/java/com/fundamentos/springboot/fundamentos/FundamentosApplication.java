@@ -65,7 +65,9 @@ public class FundamentosApplication implements CommandLineRunner {
 	userRepository.findByNameOrEmail(null, "john@domain.com").stream().forEach(user-> LOGGER.info("usuario findByNameLike"+user));
 */
 
-	userRepository.findByBirthDateBetween(LocalDate.of(2021, 3, 1), LocalDate.of(2022,1,2)).stream().forEach(user-> LOGGER.info("usuario con intervalo de fechas"+user));
+	userRepository.findByBirthDateBetween(LocalDate.of(2021, 03, 1), LocalDate.of(2022,01,2)).stream().forEach(user-> LOGGER.info("usuario con intervalo de fechas"+user));
+
+	userRepository.findByNameContainingOrderByIdDesc("user").stream().forEach(user -> LOGGER.info("usuario encontrado con like y ordenado"+user));
 	}
 
 	private void saveUsersInDatabase(){
