@@ -59,6 +59,11 @@ public class FundamentosApplication implements CommandLineRunner {
 	userRepository.findByName("John").stream().forEach(user -> LOGGER.info("usuario con query method"+user.toString()));
 
 	LOGGER.info("usuario con query method findByEmailAndName"+ userRepository.findByEmailAndName("daniela@domain.com", "Daniela").orElseThrow(() -> new RuntimeException("usuario no encontrado")));
+
+	userRepository.findByNameLike("%user%").stream().forEach(user-> LOGGER.info("usuario findByNameLike"+user));
+
+	userRepository.findByNameOrEmail(null, "john@domain.com").stream().forEach(user-> LOGGER.info("usuario findByNameLike"+user));
+
 	}
 
 	private void saveUsersInDatabase(){
