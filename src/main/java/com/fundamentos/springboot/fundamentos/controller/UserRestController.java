@@ -1,6 +1,7 @@
 package com.fundamentos.springboot.fundamentos.controller;
 
 import com.fundamentos.springboot.fundamentos.caseuse.CreateUser;
+import com.fundamentos.springboot.fundamentos.caseuse.DeleteUser;
 import com.fundamentos.springboot.fundamentos.caseuse.GetUser;
 import com.fundamentos.springboot.fundamentos.entity.User;
 import org.springframework.http.HttpStatus;
@@ -15,10 +16,12 @@ public class UserRestController {
     //create, get, delete, update
     private GetUser getUser;
     private CreateUser createUser;
+    private DeleteUser deleteUser;
 
-    public UserRestController(GetUser getUser, CreateUser createUser) {
+    public UserRestController(GetUser getUser, CreateUser createUser, DeleteUser deleteUser) {
         this.getUser = getUser;
         this.createUser = createUser;
+        this.deleteUser = deleteUser;
     }
     @GetMapping("/")
     List<User> get() {
@@ -28,5 +31,11 @@ public class UserRestController {
     @PostMapping("/")
     ResponseEntity<User> newUser(@RequestBody User newUser){
         return new ResponseEntity<>(createUser.save(newUser), HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/{id}")
+    ResponseEntity deleteUser(@PathVariable Long id){
+        deleteUser.remove(id);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 }
