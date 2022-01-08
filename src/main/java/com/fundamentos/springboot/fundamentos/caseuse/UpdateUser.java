@@ -1,5 +1,6 @@
 package com.fundamentos.springboot.fundamentos.caseuse;
 
+import com.fundamentos.springboot.fundamentos.entity.User;
 import com.fundamentos.springboot.fundamentos.service.UserService;
 import org.springframework.stereotype.Component;
 
@@ -9,5 +10,9 @@ public class UpdateUser {
 
     public UpdateUser(UserService userService) {
         this.userService = userService;
+    }
+
+    public User update(User newUser, Long id) {
+        userService.update(newUser, id);
     }
 }
